@@ -1,0 +1,51 @@
+.button {
+  padding: 15px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  user-select: none;
+}
+
+.button:hover {
+  background-color: #e0e0e0;
+}
+
+.button:active {
+  transform: scale(0.95);
+  background-color: #d0d0d0;
+}
+
+.wide {
+  grid-column: span 2;
+}
+
+/* Cores específicas para botões de operação */
+.button[aria-label="="],
+.button[aria-label="+"],
+.button[aria-label="-"],
+.button[aria-label="×"],
+.button[aria-label="÷"] {
+  background-color: #ff9500;
+  color: white;
+}
+
+.button[aria-label="="],
+.button[aria-label="+"],
+.button[aria-label="-"],
+.button[aria-label="×"],
+.button[aria-label="÷"]:hover {
+  background-color: #ff8000;
+}
+
+.button[aria-label="C"] {
+  background-color: #ff3b30;
+  color: white;
+}
+
+.button[aria-label="C"]:hover {
+  background-color: #ff1a1a;
+}
