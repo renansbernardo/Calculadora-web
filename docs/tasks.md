@@ -30,18 +30,18 @@
 - [x] Adicionar suporte a teclado
 
 ## 3. Testes
-- [ ] Configurar Jest + Testing Library
-- [ ] Testes unitários para Button
-  - [ ] Testar clicks
-  - [ ] Testar propriedade wide
-  - [ ] Testar feedback visual
-- [ ] Testes unitários para Display
-  - [ ] Testar renderização de números
-  - [ ] Testar formatação
-- [ ] Testes unitários para Calculator
-  - [ ] Testar operações básicas
-  - [ ] Testar tratamento de erros
-  - [ ] Testar sequência de operações
+- [x] Configurar Jest + Testing Library
+- [x] Testes unitários para Button
+  - [x] Testar clicks
+  - [x] Testar propriedade wide
+  - [x] Testar feedback visual
+- [x] Testes unitários para Display
+  - [x] Testar renderização de números
+  - [x] Testar formatação
+- [x] Testes unitários para Calculator
+  - [x] Testar operações básicas
+  - [x] Testar tratamento de erros
+  - [x] Testar sequência de operações
 
 ## 4. Otimizações e Ajustes
 - [ ] Verificar desempenho (tempo de resposta)
