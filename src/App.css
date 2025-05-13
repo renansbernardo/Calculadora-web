@@ -1,8 +1,26 @@
+:root {
+  --color-background: #f8f9fa;
+  --color-text: #212529;
+  --spacing-unit: clamp(0.5rem, 2vw, 1rem);
+  --container-padding: clamp(10px, 3vw, 28px);
+  --min-touch-target: 44px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root {
+    scroll-behavior: smooth;
+  }
+}
+
 #root {
   width: 100%;
   min-height: 100vh;
   margin: 0;
   padding: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .app-container {
@@ -11,13 +29,34 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f5f5f5;
-  padding: 20px;
+  background-color: var(--color-background);
+  padding: var(--container-padding);
+  color: var(--color-text);
 }
 
-/* Responsividade */
-@media (max-width: 480px) {
+/* Ajustes para dispositivos móveis em paisagem */
+@media screen and (max-height: 480px) and (orientation: landscape) {
   .app-container {
-    padding: 10px;
+    align-items: flex-start;
+    padding-top: var(--spacing-unit);
+  }
+}
+
+/* Ajustes para telas muito pequenas */
+@media screen and (max-width: 320px) {
+  :root {
+    --container-padding: 8px;
+  }
+  
+  #root {
+    font-size: 14px;
+  }
+}
+
+/* Ajustes para alto contraste */
+@media (prefers-contrast: high) {
+  :root {
+    --color-background: #ffffff;
+    --color-text: #000000;
   }
 }

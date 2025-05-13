@@ -46,11 +46,11 @@
 ## 4. Otimizações e Ajustes
 - [ ] Verificar desempenho (tempo de resposta)
 - [ ] Testar em diferentes navegadores
-- [ ] Ajustar layout responsivo
-- [ ] Validar acessibilidade (WCAG 2.1)
-  - [ ] Testar com leitor de tela
-  - [ ] Verificar contraste
-  - [ ] Validar navegação por teclado
+- [x] Ajustar layout responsivo
+- [x] Validar acessibilidade (WCAG 2.1)
+  - [x] Testar com leitor de tela
+  - [x] Verificar contraste
+  - [x] Validar navegação por teclado
 - [ ] Executar auditoria Lighthouse
 
 ## 5. Documentação
