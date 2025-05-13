@@ -1,17 +1,25 @@
 .button {
-  padding: 15px;
-  font-size: 1.2rem;
+  padding: clamp(12px, 3vw, 15px);
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-weight: 500;
   border: none;
   border-radius: 8px;
   background-color: #f0f0f0;
-  color: #333;
+  color: #000;
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
+  transition: all 0.2s;
   user-select: none;
+  position: relative;
+  outline: 2px solid transparent;
 }
 
 .button:hover {
   background-color: #e0e0e0;
+}
+
+.button:focus-visible {
+  outline: 2px solid #005bbd;
+  outline-offset: 2px;
 }
 
 .button:active {
@@ -19,18 +27,27 @@
   background-color: #d0d0d0;
 }
 
+/* Feedback tátil */
+@media (hover: hover) {
+  .button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+}
+
 .wide {
   grid-column: span 2;
 }
 
-/* Cores específicas para botões de operação */
+/* Cores específicas para botões de operação com melhor contraste */
 .button[aria-label="="],
 .button[aria-label="+"],
 .button[aria-label="-"],
 .button[aria-label="×"],
 .button[aria-label="÷"] {
-  background-color: #ff9500;
+  background-color: #cc7700;
   color: white;
+  font-weight: 600;
 }
 
 .button[aria-label="="],
@@ -38,14 +55,22 @@
 .button[aria-label="-"],
 .button[aria-label="×"],
 .button[aria-label="÷"]:hover {
-  background-color: #ff8000;
+  background-color: #995a00;
 }
 
 .button[aria-label="C"] {
-  background-color: #ff3b30;
+  background-color: #cc0000;
   color: white;
+  font-weight: 600;
 }
 
 .button[aria-label="C"]:hover {
-  background-color: #ff1a1a;
+  background-color: #990000;
+}
+
+/* Ajustes para telas de toque */
+@media (hover: none) {
+  .button {
+    padding: clamp(15px, 4vw, 20px);
+  }
 }

@@ -1,14 +1,30 @@
 .calculator {
-  width: 320px;
+  width: 100%;
+  max-width: 320px;
   background-color: #f0f0f0;
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
 }
 
 .buttons {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: clamp(6px, 2vw, 10px);
   margin-top: 20px;
+}
+
+/* Ajustes para telas pequenas */
+@media (max-width: 360px) {
+  .calculator {
+    padding: 15px;
+  }
+}
+
+/* Ajustes para telas grandes */
+@media (min-width: 768px) {
+  .calculator {
+    max-width: 400px;
+  }
 }

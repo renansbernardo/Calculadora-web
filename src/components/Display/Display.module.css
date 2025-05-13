@@ -1,23 +1,39 @@
 .display {
-  background-color: #444;
-  color: white;
-  padding: 20px;
-  font-size: 2.5rem;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  padding: clamp(15px, 4vw, 20px);
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  font-weight: 500;
   text-align: right;
   border-radius: 8px;
   margin-bottom: 20px;
-  min-height: 60px;
+  min-height: 70px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   word-wrap: break-word;
   overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s;
 }
 
-/* Responsividade */
+.display:focus {
+  outline: 2px solid #005bbd;
+  outline-offset: 2px;
+  background-color: #000000;
+}
+
+/* Melhor legibilidade em telas pequenas */
 @media (max-width: 480px) {
   .display {
-    font-size: 2rem;
-    padding: 15px;
+    letter-spacing: 1px;
+  }
+}
+
+/* Ajuste para números muito grandes */
+@media (max-width: 360px) {
+  .display {
+    font-size: clamp(1.5rem, 4vw, 1.8rem);
+    padding: 12px;
   }
 }
