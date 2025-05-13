@@ -54,10 +54,10 @@
 - [ ] Executar auditoria Lighthouse
 
 ## 5. Documentação
-- [ ] Documentar componentes
-- [ ] Criar README com instruções de instalação e uso
-- [ ] Documentar decisões técnicas
-- [ ] Adicionar comentários no código
+- [x] Documentar componentes
+- [x] Criar README com instruções de instalação e uso
+- [x] Documentar decisões técnicas
+- [x] Adicionar comentários no código
 
 ## Bugs Conhecidos e Melhorias Futuras
 - [ ] Implementar histórico de operações

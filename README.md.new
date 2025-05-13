@@ -1,0 +1,93 @@
+# Calculadora React
+
+Uma calculadora moderna e acessível construída com React, TypeScript e Vite.
+
+## Funcionalidades
+
+- Operações básicas (soma, subtração, multiplicação, divisão)
+- Interface responsiva e acessível
+- Suporte a teclado
+- Formatação de números grandes
+- Tratamento de erros (ex: divisão por zero)
+
+## Tecnologias Utilizadas
+
+- React 19
+- TypeScript
+- Vite
+- CSS Modules
+- Jest + Testing Library
+
+## Pré-requisitos
+
+- Node.js 18.19.0 ou superior
+- npm 10.2.3 ou superior
+
+## Instalação
+
+1. Clone o repositório:
+```bash
+git clone [URL_DO_REPOSITORIO]
+cd cooo
+```
+
+2. Instale as dependências:
+```bash
+npm install
+```
+
+## Scripts Disponíveis
+
+- `npm run dev` - Inicia o servidor de desenvolvimento
+- `npm run build` - Cria a build de produção
+- `npm run preview` - Visualiza a build de produção localmente
+- `npm test` - Executa os testes
+- `npm run test:watch` - Executa os testes em modo watch
+
+## Estrutura do Projeto
+
+```
+src/
+  components/
+    Button/        # Componente de botão reutilizável
+    Display/       # Componente de display da calculadora
+    Calculator/    # Componente principal da calculadora
+  App.tsx         # Componente raiz da aplicação
+```
+
+## Acessibilidade
+
+O projeto foi desenvolvido seguindo as diretrizes WCAG 2.1:
+
+- Alto contraste para melhor legibilidade
+- Suporte completo a navegação por teclado
+- ARIA labels para leitores de tela
+- Design responsivo para todos os tamanhos de tela
+
+## Testes
+
+O projeto inclui testes unitários abrangentes usando Jest e Testing Library:
+
+- Testes de componentes individuais
+- Testes de integração
+- Testes de acessibilidade
+- Testes de interação com teclado
+
+## Performance
+
+- Otimizado para carregamento rápido
+- Suporte a PWA
+- Code splitting automático
+- Bundle size otimizado
+
+## Contribuindo
+
+1. Faça o fork do projeto
+2. Crie sua feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
+
+## Licença
+
+Este projeto está licenciado sob a Licença MIT - veja o arquivo LICENSE para detalhes

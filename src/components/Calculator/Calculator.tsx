@@ -3,14 +3,26 @@ import styles from './Calculator.module.css';
 import { Display } from '../Display/Display';
 import { Button } from '../Button/Button';
 
+/** Tipo que define as operações possíveis da calculadora */
 type Operation = '+' | '-' | '×' | '÷' | '=' | 'C';
 
+/**
+ * Componente principal da calculadora
+ * @component
+ * @description Implementa uma calculadora com operações básicas, suporte a teclado
+ * e recursos de acessibilidade. Gerencia o estado da calculadora e coordena
+ * a interação entre o display e os botões.
+ * @returns {JSX.Element} Uma calculadora completa com display e teclado numérico
+ */
 export const Calculator = () => {
   const [display, setDisplay] = useState('0');
   const [operation, setOperation] = useState<Operation | null>(null);
   const [firstNumber, setFirstNumber] = useState('');
   const [newNumber, setNewNumber] = useState(false);
-
+  /**
+   * Manipula a entrada de números na calculadora
+   * @param {string} number - O número digitado ou clicado
+   */
   const handleNumber = (number: string) => {
     if (newNumber) {
       setDisplay(number);
@@ -19,7 +31,12 @@ export const Calculator = () => {
       setDisplay(display === '0' ? number : display + number);
     }
   };
-
+  /**
+   * Manipula as operações da calculadora
+   * @param {Operation} op - A operação a ser realizada
+   * @description Processa as operações matemáticas básicas e controla
+   * o fluxo de cálculo, incluindo tratamento de erros como divisão por zero
+   */
   const handleOperation = (op: Operation) => {
     if (op === 'C') {
       setDisplay('0');
