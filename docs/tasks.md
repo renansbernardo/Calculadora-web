@@ -44,14 +44,14 @@
   - [x] Testar sequência de operações
 
 ## 4. Otimizações e Ajustes
-- [ ] Verificar desempenho (tempo de resposta)
+- [x] Verificar desempenho (tempo de resposta)
 - [ ] Testar em diferentes navegadores
 - [x] Ajustar layout responsivo
 - [x] Validar acessibilidade (WCAG 2.1)
   - [x] Testar com leitor de tela
   - [x] Verificar contraste
   - [x] Validar navegação por teclado
-- [ ] Executar auditoria Lighthouse
+- [x] Executar auditoria Lighthouse
 
 ## 5. Documentação
 - [x] Documentar componentes

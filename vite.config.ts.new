@@ -1,0 +1,43 @@
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import { resolve } from 'path'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  build: {
+    target: 'esnext',
+    minify: 'terser',
+    cssMinify: true,
+    assetsInlineLimit: 4096,
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom'],
+        },
+        assetFileNames: (assetInfo: { type?: string; source?: string | Uint8Array }) => {
+          const info = assetInfo as { name?: string };
+          const fileName = info.name || '';
+          const ext = fileName.split('.').pop() || '';
+          
+          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(ext)) {
+            return `assets/img/[name]-[hash][extname]`;
+          }
+          return `assets/${ext}/[name]-[hash][extname]`;
+        },
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+      },
+    },
+  },
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src'),
+    },
+  },
+  server: {
+    open: true,
+    cors: true,
+  },
+})
