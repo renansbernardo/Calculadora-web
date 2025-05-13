@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './Calculator.module.css';
 import { Display } from '../Display/Display';
 import { Button } from '../Button/Button';
@@ -67,6 +67,37 @@ export const Calculator = () => {
     setFirstNumber(display);
     setNewNumber(true);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // Números e ponto
+      if (/^[0-9.]$/.test(event.key)) {
+        handleNumber(event.key);
+      }
+      // Operações
+      switch (event.key) {
+        case '+':
+        case '-':
+          handleOperation(event.key as Operation);
+          break;
+        case '*':
+          handleOperation('×');
+          break;
+        case '/':
+          handleOperation('÷');
+          break;
+        case 'Enter':
+          handleOperation('=');
+          break;
+        case 'Escape':
+          handleOperation('C');
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [display, operation, firstNumber, newNumber]); // Dependências necessárias
 
   return (
     <div className={styles.calculator}>

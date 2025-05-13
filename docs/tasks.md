@@ -26,8 +26,8 @@
 - [x] Implementar estado com useState
 - [x] Implementar lógica das operações básicas
 - [x] Criar grid layout dos botões
-- [ ] Implementar tratamento de erros
-- [ ] Adicionar suporte a teclado
+- [x] Implementar tratamento de erros
+- [x] Adicionar suporte a teclado
 
 ## 3. Testes
 - [ ] Configurar Jest + Testing Library
