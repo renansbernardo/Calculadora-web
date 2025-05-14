@@ -45,7 +45,7 @@
 
 ## 4. Otimizações e Ajustes
 - [x] Verificar desempenho (tempo de resposta)
-- [ ] Testar em diferentes navegadores
+- [x] Testar em diferentes navegadores
 - [x] Ajustar layout responsivo
 - [x] Validar acessibilidade (WCAG 2.1)
   - [x] Testar com leitor de tela
@@ -60,7 +60,14 @@
 - [x] Adicionar comentários no código
 
 ## Bugs Conhecidos e Melhorias Futuras
-- [ ] Implementar histórico de operações
-- [ ] Adicionar som de feedback
-- [ ] Adicionar tema escuro
-- [ ] Melhorar precisão de números decimais
+- [x] Implementar histórico de operações
+- [x] Adicionar som de feedback
+- [x] Adicionar tema escuro
+- [x] Melhorar precisão de números decimais
+
+## 6. Novas Tarefas
+- [x] Adicionar testes unitários para histórico de operações
+- [x] Testar som de feedback em diferentes navegadores
+- [ ] Testar histórico de operações em diferentes navegadores
+- [ ] Adicionar testes para tema escuro
+- [ ] Adicionar testes para precisão de números decimais

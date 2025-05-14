@@ -26,6 +26,8 @@ export const Display = ({ value }: DisplayProps) => {
     <output 
       className={styles.display}
       aria-label="Resultado da calculadora"
+      aria-live="polite"
+      aria-atomic="true"
       htmlFor="calculator"
     >
       {formatNumber(value)}

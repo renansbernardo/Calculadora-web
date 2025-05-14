@@ -26,4 +26,12 @@ describe('Button Component', () => {
     const button = screen.getByText('+');
     expect(button).toHaveAttribute('aria-label', '+');
   });
+
+  it('plays sound on click', () => {
+    const spy = jest.spyOn(require('./soundUtils'), 'playClickSound');
+    render(<Button>7</Button>);
+    fireEvent.click(screen.getByText('7'));
+    expect(spy).toHaveBeenCalled();
+    spy.mockRestore();
+  });
 });

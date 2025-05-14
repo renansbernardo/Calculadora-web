@@ -7,10 +7,19 @@
   background-color: #ffffff;
   color: #000000;
   cursor: pointer;
-  transition: all 0.2s;
-  user-select: none;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+       transition: all 0.2s;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   position: relative;
   outline: 2px solid transparent;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  touch-action: manipulation;
 }
 
 .button:hover {
@@ -74,5 +83,26 @@
 @media (hover: none) {
   .button {
     padding: clamp(15px, 4vw, 20px);
+    min-height: var(--min-touch-target, 44px);
+    min-width: var(--min-touch-target, 44px);
+  }
+  
+  .button:active {
+    transform: scale(0.96);
+    background-color: #e8e8e8;
+  }
+}
+
+/* Suporte para Firefox */
+@-moz-document url-prefix() {
+  .button {
+    background-image: none;
+  }
+}
+
+/* Suporte para Safari */
+@supports (-webkit-touch-callout: none) {
+  .button {
+    -webkit-touch-callout: none;
   }
 }

@@ -5,71 +5,77 @@ import userEvent from '@testing-library/user-event';
 describe('Calculator Component', () => {
   it('renders with initial display value of 0', () => {
     render(<Calculator />);
-    expect(screen.getByText('0')).toBeInTheDocument();
+    // Use getByRole to select the display output specifically
+    const display = screen.getByRole('status', { name: /resultado da calculadora/i });
+    expect(display).toHaveTextContent('0');
   });
 
   it('performs addition correctly', async () => {
     render(<Calculator />);
-    
-    fireEvent.click(screen.getByText('2'));
-    fireEvent.click(screen.getByText('+'));
-    fireEvent.click(screen.getByText('3'));
-    fireEvent.click(screen.getByText('='));
-
-    expect(screen.getByText('5')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: '2' }));
+    fireEvent.click(screen.getByRole('button', { name: '+' }));
+    fireEvent.click(screen.getByRole('button', { name: '3' }));
+    fireEvent.click(screen.getByRole('button', { name: '=' }));
+    const display = screen.getByRole('status', { name: /resultado da calculadora/i });
+    expect(display).toHaveTextContent('5');
   });
 
   it('performs subtraction correctly', () => {
     render(<Calculator />);
     
-    fireEvent.click(screen.getByText('5'));
-    fireEvent.click(screen.getByText('-'));
-    fireEvent.click(screen.getByText('3'));
-    fireEvent.click(screen.getByText('='));
+    fireEvent.click(screen.getByRole('button', { name: '5' }));
+    fireEvent.click(screen.getByRole('button', { name: '-' }));
+    fireEvent.click(screen.getByRole('button', { name: '3' }));
+    fireEvent.click(screen.getByRole('button', { name: '=' }));
 
-    expect(screen.getByText('2')).toBeInTheDocument();
+    const display = screen.getByRole('status', { name: /resultado da calculadora/i });
+    expect(display).toHaveTextContent('2');
   });
 
   it('performs multiplication correctly', () => {
     render(<Calculator />);
     
-    fireEvent.click(screen.getByText('4'));
-    fireEvent.click(screen.getByText('×'));
-    fireEvent.click(screen.getByText('3'));
-    fireEvent.click(screen.getByText('='));
+    fireEvent.click(screen.getByRole('button', { name: '4' }));
+    fireEvent.click(screen.getByRole('button', { name: '×' }));
+    fireEvent.click(screen.getByRole('button', { name: '3' }));
+    fireEvent.click(screen.getByRole('button', { name: '=' }));
 
-    expect(screen.getByText('12')).toBeInTheDocument();
+    const display = screen.getByRole('status', { name: /resultado da calculadora/i });
+    expect(display).toHaveTextContent('12');
   });
 
   it('performs division correctly', () => {
     render(<Calculator />);
     
-    fireEvent.click(screen.getByText('6'));
-    fireEvent.click(screen.getByText('÷'));
-    fireEvent.click(screen.getByText('2'));
-    fireEvent.click(screen.getByText('='));
+    fireEvent.click(screen.getByRole('button', { name: '6' }));
+    fireEvent.click(screen.getByRole('button', { name: '÷' }));
+    fireEvent.click(screen.getByRole('button', { name: '2' }));
+    fireEvent.click(screen.getByRole('button', { name: '=' }));
 
-    expect(screen.getByText('3')).toBeInTheDocument();
+    const display = screen.getByRole('status', { name: /resultado da calculadora/i });
+    expect(display).toHaveTextContent('3');
   });
 
   it('handles division by zero', () => {
     render(<Calculator />);
     
-    fireEvent.click(screen.getByText('6'));
-    fireEvent.click(screen.getByText('÷'));
-    fireEvent.click(screen.getByText('0'));
-    fireEvent.click(screen.getByText('='));
+    fireEvent.click(screen.getByRole('button', { name: '6' }));
+    fireEvent.click(screen.getByRole('button', { name: '÷' }));
+    fireEvent.click(screen.getByRole('button', { name: '0' }));
+    fireEvent.click(screen.getByRole('button', { name: '=' }));
 
-    expect(screen.getByText('Error')).toBeInTheDocument();
+    const display = screen.getByRole('status', { name: /resultado da calculadora/i });
+    expect(display).toHaveTextContent('Error');
   });
 
   it('clears the display when C is clicked', () => {
     render(<Calculator />);
     
-    fireEvent.click(screen.getByText('5'));
-    fireEvent.click(screen.getByText('C'));
+    fireEvent.click(screen.getByRole('button', { name: '5' }));
+    fireEvent.click(screen.getByRole('button', { name: 'C' }));
 
-    expect(screen.getByText('0')).toBeInTheDocument();
+    const display = screen.getByRole('status', { name: /resultado da calculadora/i });
+    expect(display).toHaveTextContent('0');
   });
 
   it('handles keyboard input', async () => {
@@ -81,21 +87,103 @@ describe('Calculator Component', () => {
     await user.keyboard('3');
     await user.keyboard('{Enter}');
 
-    expect(screen.getByText('8')).toBeInTheDocument();
+    const display = screen.getByRole('status', { name: /resultado da calculadora/i });
+    expect(display).toHaveTextContent('8');
   });
 
   it('handles decimal numbers', () => {
     render(<Calculator />);
     
-    fireEvent.click(screen.getByText('2'));
-    fireEvent.click(screen.getByText('.'));
-    fireEvent.click(screen.getByText('5'));
-    fireEvent.click(screen.getByText('+'));
-    fireEvent.click(screen.getByText('1'));
-    fireEvent.click(screen.getByText('.'));
-    fireEvent.click(screen.getByText('5'));
-    fireEvent.click(screen.getByText('='));
+    fireEvent.click(screen.getByRole('button', { name: '2' }));
+    fireEvent.click(screen.getByRole('button', { name: '.' }));
+    fireEvent.click(screen.getByRole('button', { name: '5' }));
+    fireEvent.click(screen.getByRole('button', { name: '+' }));
+    fireEvent.click(screen.getByRole('button', { name: '1' }));
+    fireEvent.click(screen.getByRole('button', { name: '.' }));
+    fireEvent.click(screen.getByRole('button', { name: '5' }));
+    fireEvent.click(screen.getByRole('button', { name: '=' }));
 
-    expect(screen.getByText('4')).toBeInTheDocument();
+    const display = screen.getByRole('status', { name: /resultado da calculadora/i });
+    expect(display).toHaveTextContent('4');
+  });
+
+  it('adds operation to history after calculation', () => {
+    render(<Calculator />);
+    fireEvent.click(screen.getByRole('button', { name: '2' }));
+    fireEvent.click(screen.getByRole('button', { name: '+' }));
+    fireEvent.click(screen.getByRole('button', { name: '3' }));
+    fireEvent.click(screen.getByRole('button', { name: '=' }));
+    // O histórico deve conter a operação
+    expect(screen.getByText('2 + 3 = 5')).toBeInTheDocument();
+  });
+
+  it('shows division by zero error in history', () => {
+    render(<Calculator />);
+    fireEvent.click(screen.getByRole('button', { name: '6' }));
+    fireEvent.click(screen.getByRole('button', { name: '÷' }));
+    fireEvent.click(screen.getByRole('button', { name: '0' }));
+    fireEvent.click(screen.getByRole('button', { name: '=' }));
+    expect(screen.getByText('6 ÷ 0 = Error (divisão por zero)')).toBeInTheDocument();
+  });
+
+  it('shows up to 5 most recent operations in history', () => {
+    render(<Calculator />);
+    for (let i = 1; i <= 6; i++) {
+      fireEvent.click(screen.getByRole('button', { name: '1' }));
+      fireEvent.click(screen.getByRole('button', { name: '+' }));
+      fireEvent.click(screen.getByRole('button', { name: String(i) }));
+      fireEvent.click(screen.getByRole('button', { name: '=' }));
+    }
+    // O histórico deve mostrar apenas as 5 últimas operações
+    expect(screen.queryByText('1 + 1 = 2')).not.toBeInTheDocument();
+    expect(screen.getByText('1 + 6 = 7')).toBeInTheDocument();
+  });
+});
+
+describe('Calculator decimal precision', () => {
+  it('limits result to 8 decimal places and removes trailing zeros', () => {
+    render(<Calculator />);
+    fireEvent.click(screen.getByRole('button', { name: '1' }));
+    fireEvent.click(screen.getByRole('button', { name: '÷' }));
+    fireEvent.click(screen.getByRole('button', { name: '3' }));
+    fireEvent.click(screen.getByRole('button', { name: '=' }));
+    // 1 / 3 = 0.33333333 (8 casas)
+    const display = screen.getByLabelText(/resultado da calculadora/i);
+    expect(display).toHaveTextContent('0,333'); // pt-BR uses comma
+    // Also check history for full precision
+    expect(screen.getByText('1 ÷ 3 = 0.33333333')).toBeInTheDocument();
+  });
+
+  it('removes trailing zeros after decimal', () => {
+    render(<Calculator />);
+    fireEvent.click(screen.getByRole('button', { name: '1' }));
+    fireEvent.click(screen.getByRole('button', { name: '÷' }));
+    fireEvent.click(screen.getByRole('button', { name: '2' }));
+    fireEvent.click(screen.getByRole('button', { name: '=' }));
+    const display = screen.getByLabelText(/resultado da calculadora/i);
+    expect(display).toHaveTextContent('0,5');
+    expect(screen.getByText('1 ÷ 2 = 0.5')).toBeInTheDocument();
+  });
+
+  it('handles long decimal additions', () => {
+    render(<Calculator />);
+    fireEvent.click(screen.getByRole('button', { name: '0' }));
+    fireEvent.click(screen.getByRole('button', { name: '.' }));
+    fireEvent.click(screen.getByRole('button', { name: '1' }));
+    fireEvent.click(screen.getByRole('button', { name: '+' }));
+    fireEvent.click(screen.getByRole('button', { name: '0' }));
+    fireEvent.click(screen.getByRole('button', { name: '.' }));
+    fireEvent.click(screen.getByRole('button', { name: '2' }));
+    fireEvent.click(screen.getByRole('button', { name: '=' }));
+    const display = screen.getByLabelText(/resultado da calculadora/i);
+    expect(display).toHaveTextContent('0,3');
+    // Accept both possible history strings (with or without leading zero)
+    const historyItem = screen.getByText((content) => {
+      return (
+        typeof content === 'string' &&
+        (content.trim() === '0.1 + 0.2 = 0.3' || content.trim() === '.1 + .2 = 0.3')
+      );
+    });
+    expect(historyItem).toBeInTheDocument();
   });
 });

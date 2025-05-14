@@ -1,5 +1,6 @@
 import type { ButtonHTMLAttributes } from 'react';
 import styles from './Button.module.css';
+import { playClickSound } from './soundUtils';
 
 /**
  * Interface que define as propriedades do componente Button
@@ -21,10 +22,15 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
  * @returns {JSX.Element} Um botão estilizado com suporte a acessibilidade
  */
 export const Button = ({ children, wide, ...props }: ButtonProps) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    playClickSound();
+    if (props.onClick) props.onClick(e);
+  };
   return (
     <button
       className={`${styles.button} ${wide ? styles.wide : ''}`}
       {...props}
+      onClick={handleClick}
       aria-label={typeof children === 'string' ? children : undefined}
     >
       {children}

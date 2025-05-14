@@ -19,6 +19,12 @@ export const Calculator = () => {
   const [operation, setOperation] = useState<Operation | null>(null);
   const [firstNumber, setFirstNumber] = useState('');
   const [newNumber, setNewNumber] = useState(false);
+  // Estado para histórico de operações
+  const [history, setHistory] = useState<string[]>([]);
+  const [theme, setTheme] = useState<'light' | 'dark'>(
+    window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  );
+
   /**
    * Manipula a entrada de números na calculadora
    * @param {string} number - O número digitado ou clicado
@@ -48,11 +54,10 @@ export const Calculator = () => {
 
     if (op === '=') {
       if (!operation || !firstNumber) return;
-      
       const num1 = parseFloat(firstNumber);
       const num2 = parseFloat(display);
       let result = 0;
-
+      let operationString = `${firstNumber} ${operation} ${display}`;
       switch (operation) {
         case '+':
           result = num1 + num2;
@@ -67,16 +72,25 @@ export const Calculator = () => {
           if (num2 === 0) {
             setDisplay('Error');
             setNewNumber(true);
+            setHistory(prev => [
+              `${firstNumber} ÷ ${display} = Error (divisão por zero)`,
+              ...prev
+            ]);
             return;
           }
           result = num1 / num2;
           break;
       }
-
-      setDisplay(result.toString());
+      // Corrige precisão de decimais (até 8 casas, remove zeros à direita)
+      const formattedResult = parseFloat(result.toFixed(8)).toString();
+      setDisplay(formattedResult);
       setOperation(null);
       setFirstNumber('');
       setNewNumber(true);
+      setHistory(prev => [
+        `${operationString} = ${formattedResult}`,
+        ...prev
+      ]);
       return;
     }
 
@@ -116,9 +130,33 @@ export const Calculator = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [display, operation, firstNumber, newNumber]); // Dependências necessárias
 
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
+  // Alterna tema manualmente
+  const toggleTheme = () => setTheme(t => (t === 'light' ? 'dark' : 'light'));
+
   return (
     <div className={styles.calculator}>
+      <button
+        aria-label={theme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'}
+        onClick={toggleTheme}
+        style={{ position: 'absolute', top: 10, right: 10, zIndex: 2 }}
+      >
+        {theme === 'dark' ? '🌙' : '☀️'}
+      </button>
       <Display value={display} />
+      {/* Histórico de operações */}
+      {history.length > 0 && (
+        <div className={styles.history} aria-label="Histórico de operações">
+          <ul>
+            {history.slice(0, 5).map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      )}
       <div className={styles.buttons}>
         <Button onClick={() => handleOperation('C')}>C</Button>
         <Button onClick={() => handleOperation('÷')}>÷</Button>
