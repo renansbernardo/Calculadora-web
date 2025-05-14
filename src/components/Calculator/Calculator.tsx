@@ -21,9 +21,6 @@ export const Calculator = () => {
   const [newNumber, setNewNumber] = useState(false);
   // Estado para histórico de operações
   const [history, setHistory] = useState<string[]>([]);
-  const [theme, setTheme] = useState<'light' | 'dark'>(
-    window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-  );
 
   /**
    * Manipula a entrada de números na calculadora
@@ -130,22 +127,8 @@ export const Calculator = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [display, operation, firstNumber, newNumber]); // Dependências necessárias
 
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
-
-  // Alterna tema manualmente
-  const toggleTheme = () => setTheme(t => (t === 'light' ? 'dark' : 'light'));
-
   return (
     <div className={styles.calculator}>
-      <button
-        aria-label={theme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'}
-        onClick={toggleTheme}
-        style={{ position: 'absolute', top: 10, right: 10, zIndex: 2 }}
-      >
-        {theme === 'dark' ? '🌙' : '☀️'}
-      </button>
       <Display value={display} />
       {/* Histórico de operações */}
       {history.length > 0 && (

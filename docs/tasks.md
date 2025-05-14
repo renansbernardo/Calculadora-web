@@ -68,6 +68,6 @@
 ## 6. Novas Tarefas
 - [x] Adicionar testes unitários para histórico de operações
 - [x] Testar som de feedback em diferentes navegadores
-- [ ] Testar histórico de operações em diferentes navegadores
+- [x] Testar histórico de operações em diferentes navegadores
 - [ ] Adicionar testes para tema escuro
 - [ ] Adicionar testes para precisão de números decimais

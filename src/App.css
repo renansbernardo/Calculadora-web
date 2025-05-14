@@ -4,6 +4,8 @@
   --spacing-unit: clamp(0.5rem, 2vw, 1rem);
   --container-padding: clamp(10px, 3vw, 28px);
   --min-touch-target: 44px;
+  background-color: var(--color-background);
+  color: var(--color-text);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -64,4 +66,9 @@
     --color-background: #ffffff;
     --color-text: #000000;
   }
+}
+
+[data-theme="dark"] {
+  --color-background: #181c24;
+  --color-text: #f3f6fa;
 }

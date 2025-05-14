@@ -1,39 +1,48 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { Calculator } from './components/Calculator/Calculator'
+import { useEffect, useState } from 'react';
+import './App.css';
+import { Calculator } from './components/Calculator/Calculator';
 
-function App() {
-  const [count, setCount] = useState(0)
+// Hook para tema escuro moderno (CSS custom properties + prefers-color-scheme)
+function useSystemTheme() {
+  const getSystemTheme = () =>
+    window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  const [theme, setTheme] = useState(() => {
+    const saved = localStorage.getItem('theme');
+    return saved === 'dark' || saved === 'light' ? saved : getSystemTheme();
+  });
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <div className="app-container">
-        <Calculator />
-      </div>
-    </>
-  )
+  useEffect(() => {
+    const root = document.documentElement;
+    root.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    const handler = (e: MediaQueryListEvent) => {
+      if (!localStorage.getItem('theme')) setTheme(e.matches ? 'dark' : 'light');
+    };
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+
+  return [theme, setTheme] as const;
 }
 
-export default App
+function App() {
+  const [theme, setTheme] = useSystemTheme();
+  return (
+    <div className="app-container">
+      <button
+        aria-label={theme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'}
+        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+        style={{ position: 'absolute', top: 10, right: 10, zIndex: 2 }}
+      >
+        {theme === 'dark' ? '🌙' : '☀️'}
+      </button>
+      <Calculator />
+    </div>
+  );
+}
+
+export default App;
