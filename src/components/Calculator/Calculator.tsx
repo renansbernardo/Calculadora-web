@@ -4,7 +4,7 @@ import { Display } from '../Display/Display';
 import { Button } from '../Button/Button';
 
 /** Tipo que define as operações possíveis da calculadora */
-type Operation = '+' | '-' | '×' | '÷' | '=' | 'C';
+type Operation = '+' | '-' | '×' | '÷' | '=' | 'C' | '%' | '±';
 
 /**
  * Componente principal da calculadora
@@ -34,12 +34,7 @@ export const Calculator = () => {
       setDisplay(display === '0' ? number : display + number);
     }
   };
-  /**
-   * Manipula as operações da calculadora
-   * @param {Operation} op - A operação a ser realizada
-   * @description Processa as operações matemáticas básicas e controla
-   * o fluxo de cálculo, incluindo tratamento de erros como divisão por zero
-   */
+
   const handleOperation = (op: Operation) => {
     if (op === 'C') {
       setDisplay('0');
@@ -48,7 +43,17 @@ export const Calculator = () => {
       setNewNumber(false);
       return;
     }
-
+    if (op === '±') {
+      if (display === '0' || display === 'Error') return;
+      setDisplay((prev) => (prev.startsWith('-') ? prev.slice(1) : '-' + prev));
+      return;
+    }
+    if (op === '%') {
+      if (display === '0' || display === 'Error') return;
+      setDisplay((prev) => (parseFloat(prev) / 100).toString());
+      setNewNumber(true);
+      return;
+    }
     if (op === '=') {
       if (!operation || !firstNumber) return;
       const num1 = parseFloat(firstNumber);
@@ -142,26 +147,24 @@ export const Calculator = () => {
       )}
       <div className={styles.buttons}>
         <Button onClick={() => handleOperation('C')}>C</Button>
+        <Button onClick={() => handleOperation('±')}>±</Button>
+        <Button onClick={() => handleOperation('%')}>%</Button>
         <Button onClick={() => handleOperation('÷')}>÷</Button>
-        <Button onClick={() => handleOperation('×')}>×</Button>
-        <Button onClick={() => handleOperation('-')}>-</Button>
-        
         <Button onClick={() => handleNumber('7')}>7</Button>
         <Button onClick={() => handleNumber('8')}>8</Button>
         <Button onClick={() => handleNumber('9')}>9</Button>
-        <Button onClick={() => handleOperation('+')}>+</Button>
-        
+        <Button onClick={() => handleOperation('×')}>×</Button>
         <Button onClick={() => handleNumber('4')}>4</Button>
         <Button onClick={() => handleNumber('5')}>5</Button>
         <Button onClick={() => handleNumber('6')}>6</Button>
-        
+        <Button onClick={() => handleOperation('-')}>-</Button>
         <Button onClick={() => handleNumber('1')}>1</Button>
         <Button onClick={() => handleNumber('2')}>2</Button>
         <Button onClick={() => handleNumber('3')}>3</Button>
-        <Button onClick={() => handleOperation('=')}>=</Button>
-        
+        <Button onClick={() => handleOperation('+')}>+</Button>
         <Button onClick={() => handleNumber('0')} wide>0</Button>
         <Button onClick={() => handleNumber('.')}>.</Button>
+        <Button onClick={() => handleOperation('=')}>=</Button>
       </div>
     </div>
   );

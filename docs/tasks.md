@@ -69,5 +69,6 @@
 - [x] Adicionar testes unitários para histórico de operações
 - [x] Testar som de feedback em diferentes navegadores
 - [x] Testar histórico de operações em diferentes navegadores
-- [ ] Adicionar testes para tema escuro
-- [ ] Adicionar testes para precisão de números decimais
+- [x] Adicionar testes para tema escuro
+- [x] Adicionar testes para precisão de números decimais
+- [ ] Implementar operações de porcentagem (%) e inversão de sinal (±)

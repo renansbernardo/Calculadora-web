@@ -147,10 +147,8 @@ describe('Calculator decimal precision', () => {
     fireEvent.click(screen.getByRole('button', { name: '÷' }));
     fireEvent.click(screen.getByRole('button', { name: '3' }));
     fireEvent.click(screen.getByRole('button', { name: '=' }));
-    // 1 / 3 = 0.33333333 (8 casas)
     const display = screen.getByLabelText(/resultado da calculadora/i);
-    expect(display).toHaveTextContent('0,333'); // pt-BR uses comma
-    // Also check history for full precision
+    expect(display).toHaveTextContent('0,333');
     expect(screen.getByText('1 ÷ 3 = 0.33333333')).toBeInTheDocument();
   });
 
@@ -177,7 +175,6 @@ describe('Calculator decimal precision', () => {
     fireEvent.click(screen.getByRole('button', { name: '=' }));
     const display = screen.getByLabelText(/resultado da calculadora/i);
     expect(display).toHaveTextContent('0,3');
-    // Accept both possible history strings (with or without leading zero)
     const historyItem = screen.getByText((content) => {
       return (
         typeof content === 'string' &&
@@ -185,5 +182,25 @@ describe('Calculator decimal precision', () => {
       );
     });
     expect(historyItem).toBeInTheDocument();
+  });
+
+  it('performs percentage operation', () => {
+    render(<Calculator />);
+    fireEvent.click(screen.getByRole('button', { name: '5' }));
+    fireEvent.click(screen.getByRole('button', { name: '0' }));
+    fireEvent.click(screen.getByRole('button', { name: '%' }));
+    const display = screen.getByLabelText(/resultado da calculadora/i);
+    expect(display).toHaveTextContent('0,5');
+  });
+
+  it('toggles sign with ± button', () => {
+    render(<Calculator />);
+    fireEvent.click(screen.getByRole('button', { name: '8' }));
+    fireEvent.click(screen.getByRole('button', { name: '±' }));
+    let display = screen.getByLabelText(/resultado da calculadora/i);
+    expect(display).toHaveTextContent('-8');
+    fireEvent.click(screen.getByRole('button', { name: '±' }));
+    display = screen.getByLabelText(/resultado da calculadora/i);
+    expect(display).toHaveTextContent('8');
   });
 });
