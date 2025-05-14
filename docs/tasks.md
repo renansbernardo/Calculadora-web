@@ -71,4 +71,5 @@
 - [x] Testar histórico de operações em diferentes navegadores
 - [x] Adicionar testes para tema escuro
 - [x] Adicionar testes para precisão de números decimais
-- [ ] Implementar operações de porcentagem (%) e inversão de sinal (±)
+- [x] Implementar operações de porcentagem (%) e inversão de sinal (±)
+- [x] Adicionar botão/ícone para ativar e desativar o som

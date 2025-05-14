@@ -1,5 +1,6 @@
 // Arquivo de utilitário para tocar sons simples
 export function playClickSound() {
+  if (typeof window !== 'undefined' && window.__CALC_SOUND_ON__ === false) return;
   const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
   const o = ctx.createOscillator();
   const g = ctx.createGain();

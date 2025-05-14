@@ -31,18 +31,41 @@ function useSystemTheme() {
 
 function App() {
   const [theme, setTheme] = useSystemTheme();
+  const [soundOn, setSoundOn] = useState(() => {
+    const saved = localStorage.getItem('sound');
+    return saved === null ? true : saved === 'on';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('sound', soundOn ? 'on' : 'off');
+    window.__CALC_SOUND_ON__ = soundOn;
+  }, [soundOn]);
+
   return (
     <div className="app-container">
-      <button
-        aria-label={theme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'}
-        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-        style={{ position: 'absolute', top: 10, right: 10, zIndex: 2 }}
-      >
-        {theme === 'dark' ? '🌙' : '☀️'}
-      </button>
+      <div style={{ position: 'absolute', top: 10, right: 10, zIndex: 2, display: 'flex', gap: 8 }}>
+        <button
+          aria-label={theme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'}
+          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+        >
+          {theme === 'dark' ? '🌙' : '☀️'}
+        </button>
+        <button
+          aria-label={soundOn ? 'Desativar som' : 'Ativar som'}
+          onClick={() => setSoundOn((v) => !v)}
+        >
+          {soundOn ? '🔊' : '🔇'}
+        </button>
+      </div>
       <Calculator />
     </div>
   );
+}
+
+declare global {
+  interface Window {
+    __CALC_SOUND_ON__?: boolean;
+  }
 }
 
 export default App;
