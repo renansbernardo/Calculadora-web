@@ -1,10 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import styles from './Calculator.module.css';
 import { Display } from '../Display/Display';
 import { Button } from '../Button/Button';
 
-/** Tipo que define as operações possíveis da calculadora */
+/**
+ * Tipo que define as operações possíveis da calculadora
+ */
 type Operation = '+' | '-' | '×' | '÷' | '=' | 'C' | '%' | '±';
+
+const Operation = {
+  Add: '+',
+  Subtract: '-',
+  Multiply: '×',
+  Divide: '÷',
+  Equals: '=',
+  Clear: 'C',
+  Percent: '%',
+  Sign: '±',
+} as const;
+
+type OperationType = typeof Operation[keyof typeof Operation];
 
 /**
  * Componente principal da calculadora
@@ -16,7 +31,7 @@ type Operation = '+' | '-' | '×' | '÷' | '=' | 'C' | '%' | '±';
  */
 export const Calculator = () => {
   const [display, setDisplay] = useState('0');
-  const [operation, setOperation] = useState<Operation | null>(null);
+  const [operation, setOperation] = useState<OperationType | null>(null);
   const [firstNumber, setFirstNumber] = useState('');
   const [newNumber, setNewNumber] = useState(false);
   // Estado para histórico de operações
@@ -26,16 +41,16 @@ export const Calculator = () => {
    * Manipula a entrada de números na calculadora
    * @param {string} number - O número digitado ou clicado
    */
-  const handleNumber = (number: string) => {
+  const handleNumber = useCallback((number: string) => {
     if (newNumber) {
       setDisplay(number);
       setNewNumber(false);
     } else {
       setDisplay(display === '0' ? number : display + number);
     }
-  };
+  }, [newNumber, display]);
 
-  const handleOperation = (op: Operation) => {
+  const handleOperation = useCallback((op: OperationType) => {
     if (op === 'C') {
       setDisplay('0');
       setOperation(null);
@@ -72,10 +87,10 @@ export const Calculator = () => {
           break;
         case '÷':
           if (num2 === 0) {
-            setDisplay('Error');
+            setDisplay('Não é possível dividir por zero!');
             setNewNumber(true);
             setHistory(prev => [
-              `${firstNumber} ÷ ${display} = Error (divisão por zero)`,
+              `${firstNumber} ÷ ${display} = Não é possível dividir por zero!`,
               ...prev
             ]);
             return;
@@ -99,7 +114,7 @@ export const Calculator = () => {
     setOperation(op);
     setFirstNumber(display);
     setNewNumber(true);
-  };
+  }, [display, operation, firstNumber, newNumber, setDisplay, setOperation, setFirstNumber, setNewNumber, setHistory]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -111,13 +126,13 @@ export const Calculator = () => {
       switch (event.key) {
         case '+':
         case '-':
-          handleOperation(event.key as Operation);
+          handleOperation(event.key as OperationType);
           break;
         case '*':
-          handleOperation('×');
+          handleOperation(Operation.Multiply as OperationType);
           break;
         case '/':
-          handleOperation('÷');
+          handleOperation(Operation.Divide as OperationType);
           break;
         case 'Enter':
           handleOperation('=');
@@ -130,7 +145,7 @@ export const Calculator = () => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [display, operation, firstNumber, newNumber]); // Dependências necessárias
+  }, [handleNumber, handleOperation]);
 
   return (
     <div className={styles.calculator}>
@@ -139,32 +154,32 @@ export const Calculator = () => {
       {history.length > 0 && (
         <div className={styles.history} aria-label="Histórico de operações">
           <ul>
-            {history.slice(0, 5).map((item) => (
+            {history.slice(0, 10).map((item) => (
               <li key={item}>{item}</li>
             ))}
           </ul>
         </div>
       )}
       <div className={styles.buttons}>
-        <Button onClick={() => handleOperation('C')}>C</Button>
-        <Button onClick={() => handleOperation('±')}>±</Button>
-        <Button onClick={() => handleOperation('%')}>%</Button>
-        <Button onClick={() => handleOperation('÷')}>÷</Button>
+        <Button onClick={() => handleOperation(Operation.Clear as OperationType)}>C</Button>
+        <Button onClick={() => handleOperation(Operation.Sign as OperationType)}>±</Button>
+        <Button onClick={() => handleOperation(Operation.Percent as OperationType)}>%</Button>
+        <Button onClick={() => handleOperation(Operation.Divide as OperationType)}>÷</Button>
         <Button onClick={() => handleNumber('7')}>7</Button>
         <Button onClick={() => handleNumber('8')}>8</Button>
         <Button onClick={() => handleNumber('9')}>9</Button>
-        <Button onClick={() => handleOperation('×')}>×</Button>
+        <Button onClick={() => handleOperation(Operation.Multiply as OperationType)}>×</Button>
         <Button onClick={() => handleNumber('4')}>4</Button>
         <Button onClick={() => handleNumber('5')}>5</Button>
         <Button onClick={() => handleNumber('6')}>6</Button>
-        <Button onClick={() => handleOperation('-')}>-</Button>
+        <Button onClick={() => handleOperation(Operation.Subtract as OperationType)}>-</Button>
         <Button onClick={() => handleNumber('1')}>1</Button>
         <Button onClick={() => handleNumber('2')}>2</Button>
         <Button onClick={() => handleNumber('3')}>3</Button>
-        <Button onClick={() => handleOperation('+')}>+</Button>
+        <Button onClick={() => handleOperation(Operation.Add as OperationType)}>+</Button>
         <Button onClick={() => handleNumber('0')} wide>0</Button>
         <Button onClick={() => handleNumber('.')}>.</Button>
-        <Button onClick={() => handleOperation('=')}>=</Button>
+        <Button onClick={() => handleOperation(Operation.Equals as OperationType)}>=</Button>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { Calculator } from './components/Calculator/Calculator';
+import { SoundProvider, useSound } from './context/SoundContext';
 
 // Hook para tema escuro moderno (CSS custom properties + prefers-color-scheme)
 function useSystemTheme() {
@@ -31,15 +32,7 @@ function useSystemTheme() {
 
 function App() {
   const [theme, setTheme] = useSystemTheme();
-  const [soundOn, setSoundOn] = useState(() => {
-    const saved = localStorage.getItem('sound');
-    return saved === null ? true : saved === 'on';
-  });
-
-  useEffect(() => {
-    localStorage.setItem('sound', soundOn ? 'on' : 'off');
-    window.__CALC_SOUND_ON__ = soundOn;
-  }, [soundOn]);
+  const { soundOn, setSoundOn } = useSound();
 
   return (
     <div className="app-container">
@@ -48,13 +41,13 @@ function App() {
           aria-label={theme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'}
           onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
         >
-          {theme === 'dark' ? '🌙' : '☀️'}
+          {theme === 'dark' ? <span role="img" aria-label="Tema escuro">🌙</span> : <span role="img" aria-label="Tema claro">☀️</span>}
         </button>
         <button
           aria-label={soundOn ? 'Desativar som' : 'Ativar som'}
-          onClick={() => setSoundOn((v) => !v)}
+          onClick={() => setSoundOn(!soundOn)}
         >
-          {soundOn ? '🔊' : '🔇'}
+          {soundOn ? <span role="img" aria-label="Som ligado">🔊</span> : <span role="img" aria-label="Som desligado">🔇</span>}
         </button>
       </div>
       <Calculator />
@@ -64,7 +57,6 @@ function App() {
 
 declare global {
   interface Window {
-    __CALC_SOUND_ON__?: boolean;
   }
 }
 

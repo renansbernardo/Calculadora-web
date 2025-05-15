@@ -203,4 +203,44 @@ describe('Calculator decimal precision', () => {
     display = screen.getByLabelText(/resultado da calculadora/i);
     expect(display).toHaveTextContent('8');
   });
+
+  it('handles multiple operators', () => {
+    render(<Calculator />);
+    fireEvent.click(screen.getByRole('button', { name: '2' }));
+    fireEvent.click(screen.getByRole('button', { name: '+' }));
+    fireEvent.click(screen.getByRole('button', { name: '-' }));
+    fireEvent.click(screen.getByRole('button', { name: '1' }));
+    fireEvent.click(screen.getByRole('button', { name: '=' }));
+    const display = screen.getByLabelText(/resultado da calculadora/i);
+    expect(display).toHaveTextContent('1');
+  });
+
+  it('handles chained operations', () => {
+    render(<Calculator />);
+    fireEvent.click(screen.getByRole('button', { name: '2' }));
+    fireEvent.click(screen.getByRole('button', { name: '+' }));
+    fireEvent.click(screen.getByRole('button', { name: '2' }));
+    fireEvent.click(screen.getByRole('button', { name: '=' }));
+    fireEvent.click(screen.getByRole('button', { name: '×' }));
+    fireEvent.click(screen.getByRole('button', { name: '3' }));
+    fireEvent.click(screen.getByRole('button', { name: '=' }));
+    const display = screen.getByLabelText(/resultado da calculadora/i);
+    expect(display).toHaveTextContent('12');
+  });
+
+  it('handles large numbers', () => {
+    render(<Calculator />);
+    fireEvent.click(screen.getByRole('button', { name: '9' }));
+    fireEvent.click(screen.getByRole('button', { name: '9' }));
+    fireEvent.click(screen.getByRole('button', { name: '9' }));
+    fireEvent.click(screen.getByRole('button', { name: '9' }));
+    fireEvent.click(screen.getByRole('button', { name: '9' }));
+    fireEvent.click(screen.getByRole('button', { name: '9' }));
+    fireEvent.click(screen.getByRole('button', { name: '9' }));
+    fireEvent.click(screen.getByRole('button', { name: '+' }));
+    fireEvent.click(screen.getByRole('button', { name: '1' }));
+    fireEvent.click(screen.getByRole('button', { name: '=' }));
+    const display = screen.getByLabelText(/resultado da calculadora/i);
+    expect(display).toHaveTextContent('10000000');
+  });
 });
