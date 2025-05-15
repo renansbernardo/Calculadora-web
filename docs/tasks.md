@@ -73,3 +73,13 @@
 - [x] Adicionar testes para precisão de números decimais
 - [x] Implementar operações de porcentagem (%) e inversão de sinal (±)
 - [x] Adicionar botão/ícone para ativar e desativar o som
+
+- [x] Corrigir meta tag deprecated em index.html
+- [x] Centralizar e estilizar o contêiner principal (flexbox, box-shadow, border-radius)
+- [x] Atualizar paleta de cores e definir variáveis CSS
+- [x] Ajustar estilização do display (altura, padding, background, fonte)
+- [x] Estilizar botões (border-radius, gap, hover, active, transition)
+- [x] Definir fonte global (ex: 'Inter', sans-serif)
+- [x] Melhorar estilo dos ícones de tema e volume (posicionamento, padding, hover, animação)
+- [x] Adicionar estilos de foco e atributos aria-label para acessibilidade
+- [x] Ajustar layout responsivo
