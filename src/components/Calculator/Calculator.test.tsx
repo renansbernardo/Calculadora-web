@@ -65,7 +65,7 @@ describe('Calculator Component', () => {
     fireEvent.click(screen.getByRole('button', { name: '=' }));
 
     const display = screen.getByRole('status', { name: /resultado da calculadora/i });
-    expect(display).toHaveTextContent('Error');
+    expect(display).toHaveTextContent('Não é possível dividir por zero!');
   });
 
   it('clears the display when C is clicked', () => {
@@ -123,7 +123,7 @@ describe('Calculator Component', () => {
     fireEvent.click(screen.getByRole('button', { name: '÷' }));
     fireEvent.click(screen.getByRole('button', { name: '0' }));
     fireEvent.click(screen.getByRole('button', { name: '=' }));
-    expect(screen.getByText('6 ÷ 0 = Error (divisão por zero)')).toBeInTheDocument();
+    expect(screen.getByText('6 ÷ 0 = Não é possível dividir por zero!')).toBeInTheDocument();
   });
 
   it('shows up to 5 most recent operations in history', () => {
@@ -241,6 +241,6 @@ describe('Calculator decimal precision', () => {
     fireEvent.click(screen.getByRole('button', { name: '1' }));
     fireEvent.click(screen.getByRole('button', { name: '=' }));
     const display = screen.getByLabelText(/resultado da calculadora/i);
-    expect(display).toHaveTextContent('10000000');
+    expect(display).toHaveTextContent('10.000.000');
   });
 });

@@ -30,9 +30,10 @@ type OperationType = typeof Operation[keyof typeof Operation];
  * @returns {JSX.Element} Uma calculadora completa com display e teclado numérico
  */
 export const Calculator = () => {
-  const [display, setDisplay] = useState('0');
+  type CalculatorNumber = string;
+  const [display, setDisplay] = useState<CalculatorNumber>('0');
   const [operation, setOperation] = useState<OperationType | null>(null);
-  const [firstNumber, setFirstNumber] = useState('');
+  const [firstNumber, setFirstNumber] = useState<CalculatorNumber>('');
   const [newNumber, setNewNumber] = useState(false);
   // Estado para histórico de operações
   const [history, setHistory] = useState<string[]>([]);
@@ -41,12 +42,12 @@ export const Calculator = () => {
    * Manipula a entrada de números na calculadora
    * @param {string} number - O número digitado ou clicado
    */
-  const handleNumber = useCallback((number: string) => {
+  const handleNumber = useCallback((number: CalculatorNumber) => {
     if (newNumber) {
       setDisplay(number);
       setNewNumber(false);
     } else {
-      setDisplay(display === '0' ? number : display + number);
+      setDisplay(display === '0' ? number : (display + number) as CalculatorNumber);
     }
   }, [newNumber, display]);
 
@@ -71,9 +72,9 @@ export const Calculator = () => {
     }
     if (op === '=') {
       if (!operation || !firstNumber) return;
-      const num1 = parseFloat(firstNumber);
-      const num2 = parseFloat(display);
-      let result = 0;
+      const num1 = parseFloat(firstNumber as string);
+      const num2 = parseFloat(display as string);
+      let result: number = 0;
       let operationString = `${firstNumber} ${operation} ${display}`;
       switch (operation) {
         case '+':
@@ -87,7 +88,7 @@ export const Calculator = () => {
           break;
         case '÷':
           if (num2 === 0) {
-            setDisplay('Não é possível dividir por zero!');
+            setDisplay('Não é possível dividir por zero!' as CalculatorNumber);
             setNewNumber(true);
             setHistory(prev => [
               `${firstNumber} ÷ ${display} = Não é possível dividir por zero!`,
@@ -99,7 +100,7 @@ export const Calculator = () => {
           break;
       }
       // Corrige precisão de decimais (até 8 casas, remove zeros à direita)
-      const formattedResult = parseFloat(result.toFixed(8)).toString();
+      const formattedResult = parseFloat(result.toFixed(8)).toString() as CalculatorNumber;
       setDisplay(formattedResult);
       setOperation(null);
       setFirstNumber('');
@@ -154,7 +155,7 @@ export const Calculator = () => {
       {history.length > 0 && (
         <div className={styles.history} aria-label="Histórico de operações">
           <ul>
-            {history.slice(0, 10).map((item) => (
+            {history.slice(0, 5).map((item) => (
               <li key={item}>{item}</li>
             ))}
           </ul>
